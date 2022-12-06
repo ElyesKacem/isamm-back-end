@@ -2,7 +2,6 @@ const Student = require("../models/student.js");
 const Excel = require('exceljs');
 
 
-const multer = require('multer');
 const fs = require('fs');
 
 
@@ -11,8 +10,7 @@ exports.insertStudent = async (req, res) => {
 
     // Create a student object
     let student = new Student({
-        email: req.body.email,
-        name: req.body.name,
+        ...req.body
     })
 
     // Save student in the database
@@ -108,5 +106,4 @@ exports.getStudent = async (req, res) => {
             res.send(result)
         }
       });
-      
 }

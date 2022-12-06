@@ -32,6 +32,7 @@ const testRoute = require('./routes/test');
 
 const userRoute = require('./routes/user');
 const studentRoute = require('./routes/student');
+const teacherRoute = require('./routes/teacher');
 
 
 // Route Middlewares
@@ -39,6 +40,7 @@ app.use('/test', testRoute);
 
 app.use('/user', userRoute);
 app.use('/student', studentRoute);
+app.use('/teacher', teacherRoute);
 
 app.use(cors({
     origin: '*',
