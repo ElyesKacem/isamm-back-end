@@ -11,7 +11,6 @@ exports.verifyUserToken = (req, res, next) => {
         
 
         let verifiedUser = jwt.verify(token, config.TOKEN_SECRET);   // config.TOKEN_SECRET => 'secretKey'
-        console.log("---\n",token,config.TOKEN_SECRET,verifiedUser,"\n---")
         if (!verifiedUser) return res.status(401).send('Unauthorized request')
 
         req.user = verifiedUser; // user_id & user_type_id
@@ -29,7 +28,6 @@ exports.IsUser = async (req, res, next) => {
     return res.status(401).send("Unauthorized!");   
 }
 exports.IsAdmin = async (req, res, next) => {
-    console.log(req.user.user_type_id,'...')
 
     if (req.user.user_type_id === 1) {
         return next();

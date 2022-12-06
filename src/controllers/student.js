@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Student = require("../models/student.js");
 const Excel = require('exceljs');
 
@@ -42,13 +41,26 @@ exports.insertStudentsExcel = async (req, res) => {
         let workbook = new Excel.Workbook();
         workbook.xlsx.readFile(req.files[0].originalname).then(function () {
             var worksheet = workbook.getWorksheet(1);
-            worksheet.eachRow(function (row) {
-                let student = new Student({
-                    email: row.values[1],
-                    name: row.values[2],
-                });
-                students.push(student);
+            worksheet.eachRow(function (row,rowNum) {
+                if(rowNum !== 1){
+                    let student = new Student({
+                        nom: row.values[1],
+                        prenom: row.values[2],
+                        niveau: row.values[3],
+                        classe: row.values[4],
+                        dateNaissance: row.values[5],
+                        login: row.values[6],
+                        mdp: row.values[7],
+                        alumni: row.values[8]
+    
+                    });
+                    console.log(row.values[1])
+                    console.log(student)
+                    students.push(student);
+                }
+                
             });
+            console.log(students)
             Student.insertMany(students, function(err, result){
                 if (err){
                     console.log(err)
@@ -58,11 +70,43 @@ exports.insertStudentsExcel = async (req, res) => {
                 }
             });
         });
-
-
-
     });
-
-
-
 };
+
+exports.updateStudent = async (req, res) => {
+    var id = req.params.id
+    console.log(id,req.body)
+    Student.findByIdAndUpdate(id,req.body, function(err, result){
+        if(err){
+            res.send(err)
+        }
+        else{
+            res.send(result)
+        }
+    })
+}
+
+exports.deleteStudent = async (req, res) => {
+    var id = req.params.id
+    Student.findOneAndDelete({ '_id': id }, function(err, result){
+        if(err){
+            res.send(err)
+        }
+        else{
+            res.send(result)
+        }
+    })
+}
+
+exports.getStudent = async (req, res) => {
+    var id = req.params.id
+    Student.findOne({ '_id': id }, function (err, result) {
+        if(err){
+            res.send(err)
+        }
+        else{
+            res.send(result)
+        }
+      });
+      
+}
