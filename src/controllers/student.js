@@ -42,7 +42,6 @@ exports.insertStudentsExcel = async (req, res) => {
         let workbook = new Excel.Workbook();
         workbook.xlsx.readFile(req.files[0].originalname).then(function () {
             var worksheet = workbook.getWorksheet(1);
-            console.log("+++++")
             worksheet.eachRow(function (row) {
                 let student = new Student({
                     email: row.values[1],
@@ -50,8 +49,14 @@ exports.insertStudentsExcel = async (req, res) => {
                 });
                 students.push(student);
             });
-            console.log(students, "+++++")
-            res.json(students)
+            Student.insertMany(students, function(err, result){
+                if (err){
+                    console.log(err)
+                } 
+                else{
+                    res.status(200).send( result );
+                }
+            });
         });
 
 
