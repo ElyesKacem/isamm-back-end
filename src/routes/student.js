@@ -5,7 +5,7 @@ const upload = multer();
 const studentController = require('../controllers/student');
 
 router.post('/', verifyUserToken, IsAdmin, studentController.insertStudent);
-router.post('/', verifyUserToken, IsAdmin, upload.any(), studentController.insertStudentsExcel);
+router.post('/excel', verifyUserToken, IsAdmin, upload.any(), studentController.insertStudentsExcel);
 router.patch('/:id', verifyUserToken, IsAdmin, studentController.updateStudent);
 router.get('/:id', verifyUserToken, IsAdmin, studentController.getStudent);
 router.delete('/:id', verifyUserToken, IsAdmin, studentController.deleteStudent);
