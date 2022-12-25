@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const config = require("../config/config");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user.js");
+const User = require("../models/user.model.js");
 
 
 exports.create = async (req, res) => {

@@ -1,4 +1,4 @@
-const Pfe = require("../models/pfe.js");
+const Pfe = require("../models/pfe.model.js");
 
 
 exports.insertPfe = async (req, res) => {

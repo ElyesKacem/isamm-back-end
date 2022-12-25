@@ -1,4 +1,4 @@
-const Student = require("../models/student.js");
+const Student = require("../models/student.model.js");
 const Excel = require('exceljs');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");

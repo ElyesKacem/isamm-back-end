@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { verifyUserToken, IsDirecteurEtudes } = require("../middleware/auth");
 const multer = require('multer');
 const upload = multer();
-const studentController = require('../controllers/student');
+const studentController = require('../controllers/student.controller');
 
 //student
 router.patch('/', verifyUserToken, studentController.updateStudent);

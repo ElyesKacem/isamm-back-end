@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { verifyUserToken, IsDirecteurEtudes } = require("../middleware/auth");
-const pfeController = require('../controllers/pfe');
+const pfeController = require('../controllers/pfe.controller');
 
 
 

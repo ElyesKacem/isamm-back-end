@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { verifyUserToken, IsDirecteurEtudes } = require("../middleware/auth");
-const teacherController = require('../controllers/teacher');
+const teacherController = require('../controllers/teacher.controller');
 
 //teacher
 router.patch('/', verifyUserToken, teacherController.updateTeacher);
