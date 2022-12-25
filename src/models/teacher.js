@@ -5,7 +5,7 @@ const teacherSchema = new Schema({
     prenom: String,
     tel: String,
     login: String,
-    mdp: String,
+    password: String,
 });
 
 module.exports = mongoose.model('teacher', teacherSchema, 'teachers');

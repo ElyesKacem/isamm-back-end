@@ -6,14 +6,15 @@ exports.verifyUserToken = (req, res, next) => {
     if (!bearerToken) return res.status(401).send("Access Denied / Unauthorized request");
 
     try {
-        var token = bearerToken.split(' ')[1] // Remove Bearer from string
+        var token = bearerToken.split(' ')[1]
         if (token === 'null' || !token) return res.status(401).send('Unauthorized request');
         
 
-        let verifiedUser = jwt.verify(token, config.TOKEN_SECRET);   // config.TOKEN_SECRET => 'secretKey'
+        let verifiedUser = jwt.verify(token, config.TOKEN_SECRET);
         if (!verifiedUser) return res.status(401).send('Unauthorized request')
 
-        req.user = verifiedUser; // user_id & user_type_id
+        req.user = verifiedUser;
+        console.log(req.user)
         return next();
 
     } catch (error) {
@@ -21,17 +22,30 @@ exports.verifyUserToken = (req, res, next) => {
     }
 
 }
-exports.IsUser = async (req, res, next) => {
-    if (req.user.user_type_id === 0) {
+
+
+
+exports.IsAdmin = async (req, res, next) => {
+    if (req.user.role === "admin") {
         return next();
     }
     return res.status(401).send("Unauthorized!");   
 }
-exports.IsAdmin = async (req, res, next) => {
+exports.IsDirecteurEtudes = async (req, res, next) => {
 
-    if (req.user.user_type_id === 1) {
+    if (req.user.role === "directeur") {
         return next();
     }
+    return res.status(401).send("Unauthorized!");
+
+}
+
+exports.IsHimself = async(req, res, next) => {
+
+    if (req.user._id === req.params.id) {
+        return next();
+    }
+
     return res.status(401).send("Unauthorized!");
 
 }

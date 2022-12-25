@@ -10,7 +10,7 @@ const studentSchema = new Schema({
     dateNaissance: String,
     alumni:Boolean,
     login:String,
-    mdp:String,
+    password:String,
 });
 
 module.exports = mongoose.model('student', studentSchema, 'students');
