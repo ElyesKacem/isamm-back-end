@@ -1,4 +1,4 @@
-const Pfa = require("../models/pfa.js");
+const Pfa = require("../models/pfa.model.js");
 
 
 exports.insertPfa = async (req, res) => {
