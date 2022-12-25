@@ -30,10 +30,11 @@ mongoose.connect(db,{
 // Import Routes
 const testRoute = require('./routes/test');
 
-const userRoute = require('./routes/user');
 const studentRoute = require('./routes/student');
 const teacherRoute = require('./routes/teacher');
 const pfaRoute = require('./routes/pfa');
+const userRoute = require('./routes/user');
+const pfeRoute = require('./routes/pfe');
 
 
 // Route Middlewares
@@ -44,6 +45,7 @@ app.use('/student', studentRoute);
 app.use('/teacher', teacherRoute);
 app.use('/pfa', pfaRoute);
 
+app.use('/pfe' ,pfeRoute)
 app.use(cors({
     origin: '*',
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']

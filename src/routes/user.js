@@ -1,18 +1,21 @@
 const router = require('express').Router();
-const { verifyUserToken, IsAdmin, IsUser } = require("../middleware/auth");
+const { verifyUserToken, IsDirecteurEtudes } = require("../middleware/auth");
 const userController = require('../controllers/user');
 
 
-// Register
-router.post('/register', userController.register);
-
-// Login
+//user
 router.post('/login', userController.login);
 
-// Auth user only
-router.get('/user', verifyUserToken, IsUser, userController.userEvent);
+router.patch('/', verifyUserToken, userController.updateUser)
+router.get('/', verifyUserToken, userController.getUser)
 
-// Auth Admin only
-router.get('/admin', verifyUserToken, IsAdmin, userController.adminEvent);
+//super admin (directeur etudes)
+router.post('/', verifyUserToken, IsDirecteurEtudes, userController.create);
+router.patch('/:id', verifyUserToken, IsDirecteurEtudes,userController.updateUser)
+router.delete('/:id', verifyUserToken, IsDirecteurEtudes,userController.deleteUser)
+router.get('/:id', verifyUserToken, IsDirecteurEtudes ,userController.getUser)
+
+
+
 
 module.exports = router;

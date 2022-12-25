@@ -1,10 +1,17 @@
 const router = require('express').Router();
-const { verifyUserToken, IsAdmin } = require("../middleware/auth");
+const { verifyUserToken, IsDirecteurEtudes } = require("../middleware/auth");
 const teacherController = require('../controllers/teacher');
 
-router.post('/', verifyUserToken, IsAdmin, teacherController.insertTeacher);
-router.patch('/:id', verifyUserToken, IsAdmin, teacherController.updateTeacher);
-router.get('/:id', verifyUserToken, IsAdmin, teacherController.getTeacher);
-router.delete('/:id', verifyUserToken, IsAdmin, teacherController.deleteTeacher);
+//teacher
+router.patch('/', verifyUserToken, teacherController.updateTeacher);
+router.get('/', verifyUserToken, teacherController.getTeacher);
+
+//admins
+router.post('/', verifyUserToken, IsDirecteurEtudes, teacherController.insertTeacher);
+router.patch('/:id', verifyUserToken, IsDirecteurEtudes, teacherController.updateTeacher);
+router.get('/:id', verifyUserToken, IsDirecteurEtudes, teacherController.getTeacher);
+router.delete('/:id', verifyUserToken, IsDirecteurEtudes, teacherController.deleteTeacher);
+
+
 
 module.exports = router;
