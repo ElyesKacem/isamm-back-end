@@ -13,6 +13,7 @@ exports.insertPfe = async (req, res) => {
     pfe.save((err, inserted) => {
         if (err) {
             console.log(err)
+            res.status(400).send(err.message)
         } else {
             console.log(inserted)
             res.json(inserted)

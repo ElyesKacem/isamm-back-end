@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { verifyUserToken, IsDirecteurEtudes } = require("../middleware/auth");
+const { VerifyUserToken, VerifyRole } = require("../middleware/auth");
 const pfeController = require('../controllers/pfe.controller');
 
 
 
 
-router.post('/', verifyUserToken, pfeController.insertPfe);
+router.post('/', VerifyUserToken,VerifyRole("Etudiant"), pfeController.insertPfe);
 
 
 

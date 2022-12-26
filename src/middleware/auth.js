@@ -1,7 +1,7 @@
 const config = require("../config/config");
 const jwt = require('jsonwebtoken')
 
-exports.verifyUserToken = (req, res, next) => {
+exports.VerifyUserToken = (req, res, next) => {
     var bearerToken = req.headers.authorization;
     if (!bearerToken) return res.status(401).send("Access Denied / Unauthorized request");
 
@@ -38,6 +38,18 @@ exports.IsDirecteurEtudes = async (req, res, next) => {
     }
     return res.status(401).send("Unauthorized!");
 
+}
+
+exports.VerifyRole = (role)=>{
+    return async(req,res,next)=>{
+
+        if(req.user.role==role){
+            next();
+        }
+        else{
+            res.status(401).send("Unauthorized!");
+        }
+    }
 }
 
 exports.IsHimself = async(req, res, next) => {

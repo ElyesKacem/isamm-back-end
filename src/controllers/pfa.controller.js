@@ -12,6 +12,7 @@ exports.insertPfa = async (req, res) => {
     pfa.save((err, inserted) => {
         if (err) {
             console.log(err)
+            res.status(400).send(err.message)
         } else {
             console.log(inserted)
             res.json(inserted)
