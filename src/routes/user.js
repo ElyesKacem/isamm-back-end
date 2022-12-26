@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { verifyUserToken, IsDirecteurEtudes } = require("../middleware/auth");
+const { verifyUserToken, IsDirecteurEtudes, VerifyRole } = require("../middleware/auth");
 const userController = require('../controllers/user.controller');
 
 
@@ -10,7 +10,7 @@ router.patch('/', verifyUserToken, userController.updateUser)
 router.get('/', verifyUserToken, userController.getUser)
 
 //super admin (directeur etudes)
-router.post('/', verifyUserToken, IsDirecteurEtudes, userController.create);
+router.post('/', verifyUserToken, VerifyRole("DirecteurEtudes"), userController.create);
 router.patch('/:id', verifyUserToken, IsDirecteurEtudes,userController.updateUser)
 router.delete('/:id', verifyUserToken, IsDirecteurEtudes,userController.deleteUser)
 router.get('/:id', verifyUserToken, IsDirecteurEtudes ,userController.getUser)

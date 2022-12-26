@@ -40,6 +40,18 @@ exports.IsDirecteurEtudes = async (req, res, next) => {
 
 }
 
+exports.VerifyRole = (role)=>{
+    return async(req,res,next)=>{
+
+        if(req.user.role==role){
+            next();
+        }
+        else{
+            res.status(401).send("Unauthorized!");
+        }
+    }
+}
+
 exports.IsHimself = async(req, res, next) => {
 
     if (req.user._id === req.params.id) {
