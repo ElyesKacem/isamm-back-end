@@ -1,5 +1,6 @@
 const Teacher = require("../models/teacher.model.js");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 
 
@@ -20,9 +21,9 @@ exports.insertTeacher = async (req, res) => {
     teacher.save((err, inserted) => {
         if (err) {
             console.log(err)
+            res.status(400).send(err.message)
         } else {
-            console.log(inserted)
-            res.json(inserted)
+            res.status(200).send(inserted)
         }
     })
 }
@@ -38,10 +39,10 @@ exports.updateTeacher = async (req, res) => {
     console.log(id,req.body)
     Teacher.findByIdAndUpdate(id,req.body, function(err, result){
         if(err){
-            res.send(err)
+            res.status(400).send(err.message)
         }
         else{
-            res.send(result)
+            res.status(200).send(result)
         }
     })
 }
@@ -50,10 +51,10 @@ exports.deleteTeacher = async (req, res) => {
     var id = req.params.id
     Teacher.findOneAndDelete({ '_id': id }, function(err, result){
         if(err){
-            res.send(err)
+            res.status(400).send(err.message)
         }
         else{
-            res.send(result)
+            res.status(200).send(result)
         }
     })
 }
@@ -62,10 +63,10 @@ exports.getTeacher = async (req, res) => {
     var id = req.params.id ? req.params.id : req.user.id
     Teacher.findOne({ '_id': id }, function (err, result) {
         if(err){
-            res.send(err)
+            res.status(400).send(err.message)
         }
         else{
-            res.send(result)
+            res.status(200).send(result)
         }
       });
 }
@@ -74,7 +75,7 @@ exports.login = async (req, res) => {
 
     Teacher.findOne({ email: req.body.email }, async (err, teacher) => {
         if (err) {
-            console.log(err)
+            res.status(400).send(err.message)
         } else {
             if (teacher) {
                 const validPass = await bcrypt.compare(req.body.password, teacher.password);

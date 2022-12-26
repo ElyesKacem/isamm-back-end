@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { verifyUserToken, IsAdmin } = require("../middleware/auth");
+const { VerifyUserToken, VerifyRole } = require("../middleware/auth");
 const pfaController = require('../controllers/pfa.controller');
 // replace isAdmin by isTeacher
 
-router.post('/', verifyUserToken, IsAdmin, pfaController.insertPfa);
-router.patch('/:id', verifyUserToken, IsAdmin, pfaController.updatePfa);
-router.get('/:id', verifyUserToken, IsAdmin, pfaController.getPfa);
-router.delete('/:id', verifyUserToken, IsAdmin, pfaController.deletePfa);
+router.post('/', VerifyUserToken, VerifyRole("enseignant"), pfaController.insertPfa);
+router.patch('/:id', VerifyUserToken, VerifyRole("enseignant"), pfaController.updatePfa);
+router.get('/:id', VerifyUserToken, VerifyRole("enseignant"), pfaController.getPfa);
+router.delete('/:id', VerifyUserToken, VerifyRole("enseignant"), pfaController.deletePfa);
 
 module.exports = router;

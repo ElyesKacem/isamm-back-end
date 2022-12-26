@@ -1,7 +1,7 @@
 const config = require("../config/config");
 const jwt = require('jsonwebtoken')
 
-exports.verifyUserToken = (req, res, next) => {
+exports.VerifyUserToken = (req, res, next) => {
     var bearerToken = req.headers.authorization;
     if (!bearerToken) return res.status(401).send("Access Denied / Unauthorized request");
 

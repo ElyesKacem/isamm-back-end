@@ -4,7 +4,10 @@ const teacherSchema = new Schema({
     nom: String,
     prenom: String,
     tel: String,
-    login: String,
+    login: {
+        type:String,
+        unique:true
+    },
     password: String,
 });
 

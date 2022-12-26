@@ -23,6 +23,7 @@ exports.insertStudent = async (req, res) => {
     student.save((err, inserted) => {
         if (err) {
             console.log(err)
+            res.status(400).send(err.message)
         } else {
             console.log(inserted)
             res.json(inserted)
@@ -71,6 +72,7 @@ exports.insertStudentsExcel = async (req, res) => {
             Student.insertMany(students, function(err, result){
                 if (err){
                     console.log(err)
+                    res.status(400).send(err.message)
                 } 
                 else{
                     res.status(200).send( result );
@@ -92,6 +94,7 @@ exports.updateStudent = async (req, res) => {
     Student.findByIdAndUpdate(id,req.body, function(err, result){
         if(err){
             res.send(err)
+            res.status(400).send(err.message)
         }
         else{
             res.send(result)
@@ -104,6 +107,7 @@ exports.deleteStudent = async (req, res) => {
     Student.findOneAndDelete({ '_id': id }, function(err, result){
         if(err){
             res.send(err)
+            res.status(400).send(err.message)
         }
         else{
             res.send(result)
@@ -116,6 +120,7 @@ exports.getStudent = async (req, res) => {
     Student.findOne({ '_id': id }, function (err, result) {
         if(err){
             res.send(err)
+            res.status(400).send(err.message)
         }
         else{
             res.send(result)
@@ -131,6 +136,7 @@ exports.login = async (req, res) => {
         console.log(user)
         if (err) {
             console.log(err)
+            res.status(400).send(err.message)
         } else {
             if (user) {
                 const validPass = await bcrypt.compare(req.body.password, user.password);
