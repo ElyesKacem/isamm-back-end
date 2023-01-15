@@ -3,8 +3,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const pfa = new Schema({
-    title: String,
-    description: String,
+    title: {
+        type:String,
+        required : true
+    },
+    description: {
+        type:String,
+        required : true
+    },
     date: {
         type: Date,
         default: new Date()
