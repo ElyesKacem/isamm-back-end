@@ -5,16 +5,22 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     email: {
         type:String,
-        unique:true
     },
-    password: String,
+    password: {
+        type : String,
+        required : true
+    },
     name:{
         type:String,
         required:true
     },
-    role:String,
+    role:{
+        type : String,
+        default : "admin"
+    },
     rights: {
-        type : [String]
+        type : [String],
+        default : []
     }
 });
 
