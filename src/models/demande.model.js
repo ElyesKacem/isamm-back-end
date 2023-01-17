@@ -27,4 +27,4 @@ const demandeSchema = new Schema({
   ],
 });
 
-module.exports = mongoose.model("demande", demandeSchema, "demandes");
+module.exports = mongoose.model("Demande", demandeSchema, "Demandes");

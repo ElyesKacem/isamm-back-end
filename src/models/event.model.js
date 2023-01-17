@@ -18,4 +18,4 @@ const event = new Schema({
     createdBy:{type: Schema.Types.ObjectId, ref: 'user'},
 });
 
-module.exports = mongoose.model('event', event, 'events');
+module.exports = mongoose.model('Event', event, 'Events');

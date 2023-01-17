@@ -53,19 +53,24 @@ const offerRoute = require("./routes/offer");
 const demandeRoute = require("./routes/demande");
 
 // Route Middlewares
-app.use("/test", testRoute);
+// app.use("/test", testRoute);
 
-app.use("/user", userRoute);
-app.use("/student", studentRoute);
-app.use("/teacher", teacherRoute);
-app.use("/pfa", pfaRoute);
-app.use("/offer", offerRoute);
-app.use("/demande", demandeRoute);
-app.use('/event', eventRoute);
-app.use('/test', testRoute);
-app.use('/internship', internshipRoute);
+// app.use("/user", userRoute);
+// app.use("/student", studentRoute);
+// app.use("/teacher", teacherRoute);
+// app.use("/pfa", pfaRoute);
+// app.use("/offer", offerRoute);
+// app.use("/demande", demandeRoute);
+// app.use('/event', eventRoute);
+// app.use('/test', testRoute);
+// app.use('/internship', internshipRoute);
 
-app.use("/pfe", pfeRoute);
+// app.use("/pfe", pfeRoute);
+
+
+const generalRoute=require("./routes/route");
+app.use('/',generalRoute);
+
 app.use(
   cors({
     origin: "*",

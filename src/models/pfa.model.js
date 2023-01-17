@@ -4,12 +4,10 @@ const Schema = mongoose.Schema;
 
 const pfa = new Schema({
     title: {
-        type:String,
-        required : true
+        type:String
     },
     description: {
-        type:String,
-        required : true
+        type:String
     },
     date: {
         type: Date,
@@ -19,4 +17,4 @@ const pfa = new Schema({
     // validatedBy:
 });
 
-module.exports = mongoose.model('pfa', pfa, 'pfas');
+module.exports = mongoose.model('Pfa', pfa, 'Pfas');

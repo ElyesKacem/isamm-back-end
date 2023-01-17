@@ -33,4 +33,4 @@ const resume = new Schema({
     ]
 });
 
-module.exports = mongoose.model('resume', resume, 'resumes');
+module.exports = mongoose.model('Resume', resume, 'Resumes');
