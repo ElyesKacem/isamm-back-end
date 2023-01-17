@@ -41,11 +41,6 @@ mongoose.connect(
 // Import Routes
 const testRoute = require('./routes/test');
 
-const studentRoute = require('./routes/student');
-const teacherRoute = require('./routes/teacher');
-const pfaRoute = require('./routes/pfa');
-const userRoute = require('./routes/user');
-const pfeRoute = require('./routes/pfe');
 const eventRoute = require('./routes/event');
 const internshipRoute = require('./routes/internship')
 
