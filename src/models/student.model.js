@@ -3,27 +3,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const studentSchema = new Schema({
-    nom: {
+    NIN:{
+        type : Number,
+        required : true
+    },
+    public_profile:{
+        type : Boolean,
+        default : false
+    },
+    first_name: {
         type : String,
         required : true
     },
-    prenom: {
+    last_name: {
         type : String,
         required : true
     },
-    classe: {
-        type : String,
-        required : true
-    },
-    dateNaissance: {
-        type : String,
-        required : true
-    },
-    alumni:{
-        type:String,
-        default:false
-    },
-    login:{
+    username:{
         type:String,
         required:true
     },
@@ -31,6 +27,28 @@ const studentSchema = new Schema({
         type:String,
         required:true
     },
+    class: {
+        type : String,
+        required : true
+    },
+    birthday: {
+        type : String,
+        required : true
+    },
+    alumni:{
+        type: Boolean,
+        default:false
+    },
+    resume:{
+        type: Schema.Types.ObjectId,
+        ref: 'resume'
+    },
+    internships:[
+        { 
+            type: Schema.Types.ObjectId,
+            ref: 'intership'
+        }
+    ]
 });
 
 module.exports = mongoose.model('student', studentSchema, 'students');

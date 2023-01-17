@@ -51,6 +51,7 @@ const pfaRoute = require('./routes/pfa');
 const userRoute = require('./routes/user');
 const pfeRoute = require('./routes/pfe');
 const eventRoute = require('./routes/event');
+const internshipRoute = require('./routes/internship')
 
 
 // Route Middlewares
@@ -63,6 +64,9 @@ app.use('/pfa', pfaRoute);
 
 app.use('/pfe', pfeRoute);
 app.use('/event', eventRoute);
+app.use('/test', testRoute);
+app.use('/internship', internshipRoute)
+app.use('/pfe', pfeRoute)
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']

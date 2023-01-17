@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const internship = new Schema({
-    intern_id:{
+    student_id:{
         type: Schema.Types.ObjectId,
         ref: 'student'
     },
@@ -15,7 +15,10 @@ const internship = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'teacher'
     },
-    type: { pfe: "projet de fin d'étude", init: 'initiation', perf: 'perfectionnement',summer:'été' },
+    type: { 
+        type: String,
+        enum: ['pfe','initiation','perfect','ete']
+    },
     //////////////////////////////////FILE SYSTEM REQUIRED     GRID-FS///////////////////////////////////////////
     //internship_scorecard:file
     //internship_certificate:file           
