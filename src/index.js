@@ -50,6 +50,7 @@ const teacherRoute = require('./routes/teacher');
 const pfaRoute = require('./routes/pfa');
 const userRoute = require('./routes/user');
 const pfeRoute = require('./routes/pfe');
+const eventRoute = require('./routes/event');
 
 
 // Route Middlewares
@@ -60,7 +61,8 @@ app.use('/student', studentRoute);
 app.use('/teacher', teacherRoute);
 app.use('/pfa', pfaRoute);
 
-app.use('/pfe', pfeRoute)
+app.use('/pfe', pfeRoute);
+app.use('/event', eventRoute);
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
