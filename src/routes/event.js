@@ -5,7 +5,7 @@ const eventController = require('../controllers/event.controller');
 
 router.post('/', VerifyUserToken, VerifyRole("enseignant"), eventController.insertEvent);
 router.patch('/:id', VerifyUserToken, VerifyRole("enseignant"), eventController.updateEvent);
-router.get('/:id', VerifyUserToken, VerifyRole("enseignant"), eventController.getevent);
+router.get('/:id', VerifyUserToken, VerifyRole("enseignant"), eventController.getEvent);
 router.delete('/:id', VerifyUserToken, VerifyRole("enseignant"), eventController.deleteEvent);
 
 module.exports = router;

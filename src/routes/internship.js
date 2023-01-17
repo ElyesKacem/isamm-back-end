@@ -21,7 +21,7 @@ const internshipController = require('../controllers/internship.controller');
 
 router.post('/', /*VerifyUserToken, VerifyRole("student"),*/ internshipController.insertInternship);
 router.patch('/:id', /*VerifyUserToken, VerifyRole("student"),*/ internshipController.updateInternship);
+router.get('/', /*VerifyUserToken, VerifyRole("student"),*/ internshipController.getAllInternships);
 router.get('/:id', /*VerifyUserToken, VerifyRole("student"),*/ internshipController.getInternshipsById);
-router.get('/get/all', /*VerifyUserToken, VerifyRole("student"),*/ internshipController.getAllInternships);
 
 module.exports = router;
