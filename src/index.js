@@ -45,7 +45,6 @@ const eventRoute = require('./routes/event');
 const internshipRoute = require('./routes/internship')
 
 const studentRoute = require("./routes/student");
-const teacherRoute = require("./routes/teacher");
 const pfaRoute = require("./routes/pfa");
 const userRoute = require("./routes/user");
 const pfeRoute = require("./routes/pfe");
@@ -57,7 +56,6 @@ app.use("/test", testRoute);
 
 app.use("/user", userRoute);
 app.use("/student", studentRoute);
-app.use("/teacher", teacherRoute);
 app.use("/pfa", pfaRoute);
 app.use("/offer", offerRoute);
 app.use("/demande", demandeRoute);

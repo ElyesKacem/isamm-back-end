@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const teacherSchema = new Schema({
+const personnelSchema = new Schema({
     first_name: {
         type : String,
         required : true
@@ -9,24 +9,18 @@ const teacherSchema = new Schema({
         type : String,
         required : true
     },
+    email: {
+        type : String,
+        required : true
+    },
     phone_number: {
         type : String,
         required : true
     },
-    username: {
-        type:String,
-        required : true
-    },
-    password: {
-        type : String,
-        required : true
-    },
-    role:[
-        {
-            type : String,
-            required : true
-        }
-    ]
+    credentials_id:{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }
 });
 
-module.exports = mongoose.model('teacher', teacherSchema, 'teachers');
+module.exports = mongoose.model('personnel', personnelSchema, 'personnels');
