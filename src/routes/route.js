@@ -9,7 +9,7 @@ const {modelClass} = require('../models/classe.model');
 const {modelResume} = require('../models/resume.model');
 
 // List of models
-let models = ['Student','Classe','Demande','Event','Internship','Offer','Pfa','Pfe','Resume','Student','Teacher'];
+let models = ['Classe','Demande','Event','Internship','Offer','Pfa','Pfe','Resume','Student','Teacher'];
 
 const middlewareFunctions = {
     // Internship: [createPFeValidator],
