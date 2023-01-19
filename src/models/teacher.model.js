@@ -29,4 +29,4 @@ const teacherSchema = new Schema({
     ]
 });
 
-module.exports = mongoose.model('Teacher', teacherSchema, 'Teachers');
+module.exports = mongoose.model('teacher', teacherSchema, 'teachers');

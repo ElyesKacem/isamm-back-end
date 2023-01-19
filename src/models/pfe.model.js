@@ -21,4 +21,4 @@ const pfeSchema = new Schema({
     },
 });
 
-module.exports = mongoose.model('Pfe', pfeSchema, 'Pfes');
+module.exports = mongoose.model('pfe', pfeSchema, 'pfes');

@@ -35,4 +35,4 @@ const internship = new Schema({
     commentary:String
 });
 
-module.exports = mongoose.model('Internship', internship, 'Internships');
+module.exports = mongoose.model('internship', internship, 'internships');

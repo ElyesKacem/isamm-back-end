@@ -17,4 +17,4 @@ const pfa = new Schema({
     // validatedBy:
 });
 
-module.exports = mongoose.model('Pfa', pfa, 'Pfas');
+module.exports = mongoose.model('pfa', pfa, 'pfas');
