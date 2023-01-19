@@ -7,9 +7,17 @@ const mongoose = require('mongoose');
 
 const {modelClass} = require('../models/classe.model');
 const {modelResume} = require('../models/resume.model');
+const {demande} = require('../models/demande.model');
+const {event} = require('../models/event.model');
+const {internship} = require('../models/internship.model');
+const {offer} = require('../models/offer.model');
+const {pfa} = require('../models/pfa.model');
+const {resume} = require('../models/resume.model');
+const {student} = require('../models/student.model');
+const {teacher} = require('../models/teacher.model');
 
 // List of models
-let models = ['classe','demande','event','internship','offer','pfa','pfe','resume','student','teacher'];
+let models = ['classe','demande','event','internship','offer','pfa','resume','student','teacher'];
 
 const middlewareFunctions = {
     // Internship: [createPFeValidator],

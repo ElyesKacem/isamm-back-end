@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const personnelSchema = new Schema({
+const teacherSchema = new Schema({
     first_name: {
         type : String,
         required : true
@@ -23,4 +23,4 @@ const personnelSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('personnel', personnelSchema, 'personnels');
+module.exports = mongoose.model('teacher', teacherSchema, 'teachers');
