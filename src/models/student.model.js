@@ -20,8 +20,7 @@ const studentSchema = new Schema({
         required : true
     },
     class: {
-        type : String,
-        required : true
+        type : String
     },
     birthday: {
         type : String,
