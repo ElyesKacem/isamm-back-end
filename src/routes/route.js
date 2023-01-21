@@ -15,8 +15,10 @@ const {pfa} = require('../models/pfa.model');
 const {resume} = require('../models/resume.model');
 const {student} = require('../models/student.model');
 const {teacher} = require('../models/teacher.model');
+const {user} = require('../models/user.model');
 
 // List of models
+let simpleModels = ['demande','pfa','resume'];
 let models = ['classe','demande','event','internship','offer','pfa','resume','student','teacher'];
 
 const middlewareFunctions = {
@@ -27,6 +29,22 @@ const middlewareFunctions = {
 
 // Loop over models and define CRUD routes
 models.forEach(modelName => {
+/**
+ * @swagger
+ * /modelName:
+ *   get:
+ *     description:  "${modelName}"
+ *     tags:
+ *       - "${modelName}"
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Test routes
+ *         schema:
+ *           type: string
+ */
+
     // Get the model
     const Model = mongoose.model(modelName);
     const middlewares = middlewareFunctions[modelName] || []
