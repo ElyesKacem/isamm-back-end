@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+// const Swagger = require('swagger-client');
 // const createPFeValidator = require('../validators/validator');
 
 // don't forget to import middlewares's functions
@@ -19,6 +20,7 @@ const middlewareFunctions = {
 
 // Loop over models and define CRUD routes
 models.forEach(modelName => {
+    
     // Get the model
     const Model = mongoose.model(modelName);
     const middlewares = middlewareFunctions[modelName] || []
