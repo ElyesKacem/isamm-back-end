@@ -20,6 +20,10 @@ const offerSchema = new Schema({
     type: String,
     required: true,
   },
+  student_id:{
+    type: Schema.Types.ObjectId,
+    ref: 'student'
+  },
 });
 
 module.exports = mongoose.model("offer", offerSchema, "offers");

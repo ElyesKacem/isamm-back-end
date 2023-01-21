@@ -14,12 +14,12 @@ const {offer} = require('../models/offer.model');
 const {pfa} = require('../models/pfa.model');
 const {resume} = require('../models/resume.model');
 const {student} = require('../models/student.model');
-const {teacher} = require('../models/teacher.model');
+const {teacher} = require('../models/personnel.model');
 const {user} = require('../models/user.model');
 
 // List of models
 let simpleModels = ['demande','pfa','resume'];
-let models = ['classe','demande','event','internship','offer','pfa','resume','student','teacher'];
+let models = ['classe','demande','event','internship','offer','pfa','resume','student','personnel'];
 
 const middlewareFunctions = {
     // Internship: [createPFeValidator],

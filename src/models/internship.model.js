@@ -13,11 +13,11 @@ const internship = new Schema({
     organization_supervisor:String,
     university_supervisor_id:{
         type: Schema.Types.ObjectId,
-        ref: 'teacher'
+        ref: 'personnel'
     },
     type: { 
         type: String,
-        enum: ['pfe','initiation','perfect','ete']
+        enum: ['pfe','initiation','perfect','summer']
     },
     //////////////////////////////////FILE SYSTEM REQUIRED     GRID-FS///////////////////////////////////////////
     //internship_scorecard:file

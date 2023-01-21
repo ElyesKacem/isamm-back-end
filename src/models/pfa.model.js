@@ -13,7 +13,7 @@ const pfa = new Schema({
         type: Date,
         default: new Date()
     },
-    createdBy:{type: Schema.Types.ObjectId, ref: 'user'},
+    createdBy:{type: Schema.Types.ObjectId, ref: 'personnel'},
     // validatedBy:
 });
 

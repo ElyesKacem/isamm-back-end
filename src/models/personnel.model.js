@@ -1,24 +1,26 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
-
-const pfeSchema = new Schema({
-    etudiant: {
+const personnelSchema = new Schema({
+    first_name: {
         type : String,
         required : true
     },
-    titre: {
+    last_name: {
         type : String,
         required : true
     },
-    pays: {
+    email: {
         type : String,
         required : true
     },
-    societe: {
+    phone_number: {
         type : String,
         required : true
     },
+    credentials_id:{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }
 });
 
-module.exports = mongoose.model('pfe', pfeSchema, 'pfes');
+module.exports = mongoose.model('personnel', personnelSchema, 'personnels');
