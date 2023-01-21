@@ -13,7 +13,7 @@ const userSchema = new Schema({
     },
     roles:{
         type : [String],
-        enum:["student", "teacher","administrator"]
+        enum:["student", "teacher", "administrator", "responsable", "directeur"]
     },
     rights: {
         type : [String],

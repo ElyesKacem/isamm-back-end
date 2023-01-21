@@ -12,11 +12,12 @@ router.get('/', VerifyUserToken, studentController.getStudent);
 router.post('/login', studentController.login);
 
 //admins
-router.post('/', VerifyUserToken, VerifyRole("directeur"), studentController.insertStudent);
-router.patch('/:id', VerifyUserToken,VerifyRole("directeur"), studentController.updateStudent);
-router.get('/:id', VerifyUserToken,VerifyRole("directeur"), studentController.getStudent);
-router.delete('/:id', VerifyUserToken, VerifyRole("directeur"), studentController.deleteStudent);
-router.post('/excel', VerifyUserToken, VerifyRole("directeur"), upload.any(), studentController.insertStudentsExcel);
+router.post('/', VerifyUserToken, VerifyRole(["administrator"]), studentController.insertStudent);
+router.patch('/:id', VerifyUserToken,VerifyRole(["administrator","student"]), studentController.updateStudent);
+router.get('/:id', VerifyUserToken,VerifyRole(["administrator","student"]), studentController.getStudent);
+router.get('/get/all', VerifyUserToken,VerifyRole(["administrator"]), studentController.getAllStudents);
+router.delete('/:id', VerifyUserToken, VerifyRole(["administrator"]), studentController.deleteStudent);
+router.post('/excel', VerifyUserToken, VerifyRole(["administrator"]), upload.any(), studentController.insertStudentsExcel);
 
 
 

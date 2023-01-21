@@ -22,7 +22,7 @@ exports.VerifyUserToken = (req, res, next) => {
   }
 };
 
-exports.IsAdmin = async (req, res, next) => {
+/*exports.IsAdmin = async (req, res, next) => {
   if (req.user.role === "admin") {
     return next();
   }
@@ -33,11 +33,20 @@ exports.IsDirecteurEtudes = async (req, res, next) => {
     return next();
   }
   return res.status(401).send("Unauthorized!");
-};
+};*/
 
-exports.VerifyRole = (role) => {
+exports.VerifyRole = (roles) => {
   return async (req, res, next) => {
-    if (req.user.role == role) {
+    if (req.user.roles.some(role => roles.includes(role)) ) {
+      next();
+    } else {
+      res.status(401).send("Unauthorized!");
+    }
+  };
+};
+exports.isAlumni = () => {
+  return async (req, res, next) => {
+    if (req.user.isAlumni == true ) {
       next();
     } else {
       res.status(401).send("Unauthorized!");

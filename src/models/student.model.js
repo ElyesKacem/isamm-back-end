@@ -37,7 +37,7 @@ const studentSchema = new Schema({
     internships:[
         { 
             type: Schema.Types.ObjectId,
-            ref: 'intership'
+            ref: 'internship'
         }
     ],
     credentials_id:{

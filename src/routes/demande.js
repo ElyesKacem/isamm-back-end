@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { VerifyUserToken, VerifyRole } = require("../middleware/auth");
+const { VerifyUserToken, VerifyRole, isAlumni } = require("../middleware/auth");
 const demandeController = require('../controllers/demande.controller');
 
 //others
@@ -7,10 +7,10 @@ router.get('/', VerifyUserToken, demandeController.getDemande);
 
 
 //alumni
-router.post('/', VerifyUserToken, VerifyRole("alumni"), demandeController.insertDemande);
-router.patch('/:id', VerifyUserToken,VerifyRole("alumni"), demandeController.updateDemande);
-router.get('/:id', VerifyUserToken,VerifyRole("alumni"), demandeController.getDemande);
-router.delete('/:id', VerifyUserToken, VerifyRole("alumni"), demandeController.deleteDemande);
+router.post('/', VerifyUserToken, isAlumni(), demandeController.insertDemande);
+router.patch('/:id', VerifyUserToken, isAlumni(), demandeController.updateDemande);
+router.get('/:id', VerifyUserToken, isAlumni(), demandeController.getDemande);
+router.delete('/:id', VerifyUserToken, isAlumni(), demandeController.deleteDemande);
 
 
 
