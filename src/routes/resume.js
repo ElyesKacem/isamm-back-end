@@ -19,9 +19,9 @@ const resumeController = require('../controllers/resume.controller');
  *           type: string
  */
 
-router.post('/', /*VerifyUserToken, VerifyRole("student"),*/ resumeController.insertResume);
-router.patch('/:id', /*VerifyUserToken, VerifyRole("student"),*/ resumeController.updateResume);
-router.get('/:id', /*VerifyUserToken, VerifyRole("student"),*/ resumeController.updateResume);
-router.get('/get/all', /*VerifyUserToken, VerifyRole("student"),*/ resumeController.getAllResume);
+router.post('/', VerifyUserToken, VerifyRole(["student"]), resumeController.insertResume);
+router.patch('/:id', VerifyUserToken, VerifyRole(["student"]), resumeController.updateResume);
+router.get('/:id', VerifyUserToken, VerifyRole(["student","teacher"]), resumeController.getResumeById);
+router.get('/get/all', VerifyUserToken, VerifyRole(["teacher"]), resumeController.getAllResume);
 
 module.exports = router;

@@ -19,7 +19,7 @@ router.get('/', VerifyUserToken, userController.getUser)
  *     tags:
  *       - User
  */
-router.post('/', VerifyUserToken, VerifyRole("directeur"), userController.create);
+router.post('/', /*VerifyUserToken, VerifyRole("directeur"),*/ userController.create);
 /**
  * @swagger
  * /user/:id:

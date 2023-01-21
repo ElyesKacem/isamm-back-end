@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { VerifyUserToken, VerifyRole } = require("../middleware/auth");
+const { VerifyUserToken, VerifyRole, isAlumni } = require("../middleware/auth");
 const offerController = require('../controllers/offer.controller');
 
 //others
@@ -7,10 +7,10 @@ router.get('/', VerifyUserToken, offerController.getOffer);
 
 
 //alumni
-router.post('/', VerifyUserToken, VerifyRole("alumni"), offerController.insertOffer);
-router.patch('/:id', VerifyUserToken,VerifyRole("alumni"), offerController.updateOffer);
-router.get('/:id', VerifyUserToken,VerifyRole("alumni"), offerController.getOffer);
-router.delete('/:id', VerifyUserToken, VerifyRole("alumni"), offerController.deleteOffer);
+router.post('/', VerifyUserToken, isAlumni(), offerController.insertOffer);
+router.patch('/:id', VerifyUserToken, isAlumni(), offerController.updateOffer);
+router.get('/:id', VerifyUserToken, isAlumni(), offerController.getOffer);
+router.delete('/:id', VerifyUserToken, isAlumni(), offerController.deleteOffer);
 
 
 

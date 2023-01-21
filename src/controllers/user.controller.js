@@ -11,10 +11,9 @@ exports.create = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt);
     let user = new User({
-        email: req.body.email,
-        name: req.body.name,
+        username: req.body.username,
         password: hashPassword,
-        role: "admin",
+        roles: req.body.roles,
         rights:[]
     })
 
@@ -28,7 +27,11 @@ exports.create = async (req, res) => {
 
             res.status(200).send({ token })
         }
-    })
+    });
+    req.body.roles.forEach(role => {
+        
+    });
+
 }
 
 exports.login = async (req, res) => {
