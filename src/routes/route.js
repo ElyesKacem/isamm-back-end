@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const bcrypt = require("bcryptjs");
 // const createPFeValidator = require('../validators/validator');
 
 // don't forget to import middlewares's functions
 
-const {modelClass} = require('../models/classe.model');
-const {modelResume} = require('../models/resume.model');
 const {demande} = require('../models/demande.model');
 const {event} = require('../models/event.model');
 const {internship} = require('../models/internship.model');
@@ -14,12 +13,15 @@ const {offer} = require('../models/offer.model');
 const {pfa} = require('../models/pfa.model');
 const {resume} = require('../models/resume.model');
 const {student} = require('../models/student.model');
-const {teacher} = require('../models/personnel.model');
-const {user} = require('../models/user.model');
+const {personnel} = require('../models/personnel.model');
+const {company} = require('../models/company.model');
+const {country} = require('../models/country.model');
+const {promotion} = require('../models/promotion.model');
+const {statisticPfe} = require('../models/statisticPfe.model');
 
 // List of models
 let simpleModels = ['demande','pfa','resume'];
-let models = ['classe','demande','event','internship','offer','pfa','resume','student','personnel'];
+let models = ['demande','event','internship','offer','personnel','pfa','resume','student'];
 
 const middlewareFunctions = {
     // Internship: [createPFeValidator],
@@ -50,12 +52,93 @@ models.forEach(modelName => {
     const middlewares = middlewareFunctions[modelName] || []
     // Create
     router.post(`/${modelName}`,middlewares,async (req, res) => {
-        const newModel = new Model(req.body);
-        try {
-            await newModel.save();
-            res.status(201).send(newModel);
-        } catch (error) {
-            res.status(400).send(error);
+        
+        // req body contains data and info.
+        // data contains the data to save, info contains object id that we need for references, or any other informations.
+
+        const data=req.body.data;
+
+        // special treatment for student and personnal 
+        
+        if(['student', 'personnel'].includes(modelName)){
+            const salt = await bcrypt.genSalt(10);
+            let hashedPassword = await bcrypt.hash(data.phone_number, salt);
+            const User=mongoose.model("user");
+            const userToSave= User({
+                username : data.phone_number,
+                password:hashedPassword,
+                roles:data.roles
+            });
+
+            // saving the general user
+            
+            try {
+                await userToSave.save();
+            } catch (error) {
+                console.log(error);
+            }
+
+            
+            // saving the specific model ( personnel or student)
+            let {roles, ...dataToSave}=data;
+            const newModel = new Model({
+                ...dataToSave,
+                credentials_id : userToSave._id
+            });          
+            
+            try {
+                await newModel.save();
+                res.status(201).send(newModel);
+            } catch (error) {
+                res.status(400).send(error);
+            }
+
+            // preparing for the statistics...
+            if(modelName=="student")
+            {
+                if(data.alumni)
+                {
+                    
+                }
+            }
+
+        }
+
+        else{
+            // getting info from req
+        //     const info=req.body.info;
+            
+        //     // saving demande
+        //     if(modelName=='internship'){
+
+
+        //         // try {
+        //         //     const newModel = new Model({...data,})
+        //         //     await newModel.save();
+        //         //     res.status(201).send(newModel);
+        //         // } catch (error) {
+        //         //     res.status(400).send(error);
+        //         // }
+        // }
+        // // saving any other object 
+        // else{
+            
+        //     Model.save(...req.body.data,)
+
+        // }}
+
+
+
+
+
+        // try to put all the informations in data ( don't forget to put object id references )
+            try {
+                const newModel = new Model(data)
+                await newModel.save();
+                res.status(201).send(newModel);
+            } catch (error) {
+                res.status(400).send(error);
+            }
         }
     });
     
@@ -92,7 +175,7 @@ models.forEach(modelName => {
     // Update
     router.put(`/${modelName}/:id`, async (req, res) => {
         try {
-            const model = await Model.findByIdAndUpdate(req.params.id, req.body, {
+            const model = await Model.findByIdAndUpdate(req.params.id, req.body.data, {
                 new: true,
                 runValidators: true
             });
@@ -107,6 +190,15 @@ models.forEach(modelName => {
 
     // Delete
     router.delete(`/${modelName}/:id`, async (req, res) => {
+        
+        // dont
+        // forget
+        // to
+        // make
+        // delete
+        // on
+        // cascade
+
         try {
             const model = await Model.findByIdAndDelete(req.params.id);
             if (!model) {
