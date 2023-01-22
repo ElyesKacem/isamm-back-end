@@ -20,7 +20,6 @@ exports.insertOffer = async (req, res) => {
 
 exports.updateOffer = async (req, res) => {
   var id = req.params.id;
-  console.log(id, req.body);
   Offer.findByIdAndUpdate(id, req.body, function (err, result) {
     if (err) {
       res.send(err);

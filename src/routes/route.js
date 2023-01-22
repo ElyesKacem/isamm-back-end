@@ -18,13 +18,19 @@ const {company} = require('../models/company.model');
 const {country} = require('../models/country.model');
 const {promotion} = require('../models/promotion.model');
 const {statisticPfe} = require('../models/statisticPfe.model');
+const { VerifyUserToken, isAlumni, VerifyRole } = require('../middleware/auth');
 
 // List of models
-let simpleModels = ['demande','pfa','resume'];
 let models = ['demande','event','internship','offer','personnel','pfa','resume','student'];
 
 const middlewareFunctions = {
-    // Internship: [createPFeValidator],
+
+    demande: [VerifyUserToken,isAlumni],
+    event: [VerifyUserToken,VerifyRole(["teacher"])],
+    internship: [VerifyUserToken,VerifyRole(["teacher"])],
+    offer: [VerifyUserToken,isAlumni],
+    personnel: [VerifyUserToken,VerifyRole(["administrator"])],
+    pfa: [VerifyUserToken,VerifyRole(["teacher"])]
 
 }
 
@@ -64,7 +70,6 @@ models.forEach(modelName => {
             const salt = await bcrypt.genSalt(10);
             let hashedPassword = await bcrypt.hash(data.phone_number.toString(), salt);
             const User=mongoose.model("user");
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",User);
             const userToSave= User({
                 username : data.phone_number,
                 password:hashedPassword,
