@@ -9,7 +9,7 @@ const promotionSchema = new Schema({
       },
       promotion_count: {
         type: Number,
-        default:0
+        default:1
       },
   
 });

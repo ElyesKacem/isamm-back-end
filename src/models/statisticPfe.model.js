@@ -2,15 +2,15 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const statisticSchema = new Schema({
+const statisticPfeSchema = new Schema({
   pfe_name:{
     type: Number,
     required: true,
   },
   pfe_count: {
     type: Number,
-    default:0
+    default:1
   }
 });
 
-module.exports = mongoose.model("statistic", statisticSchema, "statistics");
+module.exports = mongoose.model("statisticPfe", statisticPfeSchema, "statisticPfes");

@@ -9,7 +9,7 @@ const countrySchema = new Schema({
       },
       student_count: {
         type: Number,
-        default:0
+        default:1
       }
   
 });
