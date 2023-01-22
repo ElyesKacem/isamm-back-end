@@ -1,78 +1,82 @@
 const Teacher = require("../models/teacher.model");
-const Excel = require('exceljs');
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const config = require("../config/config");
-
-const fs = require('fs');
+const services = require("../services/services")
 
 
-
-exports.insertTeacher = async (req, res) => {
+exports.addTeacher = async (req, res) => {
     // Create a teacher object
-    let teacher = new Teacher({
+    let teacherData = new Teacher({
+        _id : req.body.user,
+        user:req.params.user,
         ...req.body
     })
-
     // Save teacher in the database
-    teacher.save((err, inserted) => {
-        if (err) {
-            console.log(err)
-            res.status(400).send(err.message)
-        } else {
-            console.log(inserted)
-            res.json(inserted)
-        }
-    })
+    try{
+        const teacher = await services.add("Teacher",teacherData)
+        await services.addRole(teacher.user,"teacher")
+        res.json(teacher)
+    }catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+exports.createTeacher = async (req, res) => {
+    try {
+        const newUser = {...req.body,roles:["teacher"]};
+        const user = await services.add("User", newUser);
+        const newTeacher = { _id : user._id,user: user._id , ...req.body};
+        const teacher = await services.add("Teacher", newTeacher);
+        res.status(201).json({ message: "Teacher and User created successfully", teacher });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 exports.updateTeacher = async (req, res) => {
-    var id = req.params.id ? req.params.id : req.user.id
-    console.log(id, req.body)
-    Teacher.findByIdAndUpdate(id, req.body, function (err, result) {
-        if (err) {
-            res.send(err)
-            res.status(400).send(err.message)
-        }
-        else {
-            res.send(result)
-        }
-    })
+    try {
+        const id = req.params.id ? req.params.id : req.user.id;
+        const updates = req.body;
+        const updatedTeacher = await services.update("Teacher",id, updates);
+        res.status(200).json({ message: "Teacher updated successfully", updatedTeacher });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 exports.deleteTeacher = async (req, res) => {
-    var id = req.user.id
-    Teacher.findOneAndDelete({ '_id': id }, function (err, result) {
-        if (err) {
-            res.send(err)
-            res.status(400).send(err.message)
+    try {
+        const id = req.params.id;
+        const deletedTeacher = await TeacherService.deleteTeacher("Teacher",id);
+        if(!deletedTeacher){
+            res.status(404).json({ message: "Teacher not found"});
+        }else{
+            res.status(200).json({ message: "Teacher deleted successfully", deletedTeacher });
         }
-        else {
-            res.send(result)
-        }
-    })
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
+
 
 exports.getTeacher = async (req, res) => {
-    var id = req.params.id ? req.params.id : req.user.id
-    Teacher.findOne({ '_id': id }, function (err, result) {
-        if (err) {
-            res.send(err)
-            res.status(400).send(err.message)
+    try {
+        const id = req.params.id ? req.params.id : req.user.id;
+        const teacher = await services.get("Teacher",id);
+        if(!teacher){
+            res.status(404).json({ message: "Teacher not found"});
+        }else{
+            res.status(200).json( teacher );
         }
-        else {
-            res.send(result)
-        }
-    });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
+
 exports.getAllTeachers = async (req, res) => {
-    Teacher.find(function (err, result) {
-        if (err) {
-            res.send(err)
-        }
-        else {
-            res.send(result)
-        }
-    });
+    try {
+        const teachers = await services.getAll("Teacher");
+        res.status(200).json({ teachers });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
