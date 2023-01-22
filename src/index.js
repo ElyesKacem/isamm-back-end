@@ -8,11 +8,24 @@ const mongoose = require("mongoose");
 
 app.use(express.json()); //or use body-parser middleware to parse the JSON
 const swaggerDefinition = {
+  openapi: '3.0.0',
   info: {
     title: "Analytics Project",
     version: "1.0.0",
     description: "Analytics API swagger documentation",
   },
+  components: {
+    securitySchemes: {
+        bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+        }
+    }
+  },
+  security: [{
+      bearerAuth: []
+  }]
 };
 const options = {
   swaggerDefinition,
@@ -46,7 +59,7 @@ mongoose.connect(
 
 // const studentRoute = require("./routes/student");
 // const pfaRoute = require("./routes/pfa");
-// const userRoute = require("./routes/user");
+const userRoute = require("./routes/user");
 // const pfeRoute = require("./routes/pfe");
 // const offerRoute = require("./routes/offer");
 // const demandeRoute = require("./routes/demande");
@@ -54,7 +67,6 @@ mongoose.connect(
 // Route Middlewares
 // app.use("/test", testRoute);
 
-// app.use("/user", userRoute);
 // app.use("/student", studentRoute);
 // app.use("/teacher", teacherRoute);
 // app.use("/pfa", pfaRoute);
@@ -69,6 +81,7 @@ mongoose.connect(
 
 const generalRoute=require("./routes/route");
 app.use('/',generalRoute);
+app.use("/user", userRoute);
 
 app.use(
   cors({
