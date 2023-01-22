@@ -15,7 +15,6 @@ exports.VerifyUserToken = (req, res, next) => {
     if (!verifiedUser) return res.status(401).send("Unauthorized request");
 
     req.user = verifiedUser;
-    console.log(req.user);
     return next();
   } catch (error) {
     res.status(400).send("Invalid Token");

@@ -5,7 +5,17 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     username:{
         type : String,
-        required : true
+        required : true,
+        validate: {
+            validator: async function(username) {
+              const user = await this.constructor.findOne({ username:username });
+              if(user) {
+                return false;
+              }
+              return true;
+            },
+            message: () => 'The specified username is already in use.'
+          },
     },
     password: {
         type : String,
@@ -18,6 +28,10 @@ const userSchema = new Schema({
     rights: {
         type : [String],
         default : []
+    },
+    resetLink: {type: String, default: ''},
+    email:{
+        type:String,required : true
     }
 });
 

@@ -63,11 +63,52 @@ const studentSchema = new Schema({
             ref: 'internship'
         }
     ],
-    credentials_id:{
-        type: Schema.Types.ObjectId,
-        ref: 'user'
+    email: {
+        type: String,
+        required: true,
+        validate: {
+            validator: async function (email) {
+                const student = await this.constructor.findOne({ email: email });
+                if (student) {
+                    return false;
+                }
+                return true;
+            },
+            message: () => `Email ${email} is used!`
+        },
+    },
+    credentials_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true,
+        validate: {
+            validator: async function (user) {
+                const student = await this.constructor.findOne({ user: user });
+                if (student) {
+                    return false;
+                }
+                return true;
+            },
+            message: () => 'User is already a student.'
+        },
     },
     
 });
 
+studentSchema.pre('deleteOne',function (next) {
+    const studentId = this.getQuery()["_id"];
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit",studentId);
+    mongoose.model('internshipSchema').deleteMany(
+        {student_id:studentId},function (err, result) {
+            if (err) {
+                console.log(`[error] ${err}`);
+                next(err);
+            } else {
+                console.log(result);
+                next();
+            }
+        }
+    );
+    next();
+});
 module.exports = mongoose.model('student', studentSchema, 'students');
