@@ -95,4 +95,20 @@ const studentSchema = new Schema({
     
 });
 
+studentSchema.pre('deleteOne',function (next) {
+    const studentId = this.getQuery()["_id"];
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit",studentId);
+    mongoose.model('internshipSchema').deleteMany(
+        {student_id:studentId},function (err, result) {
+            if (err) {
+                console.log(`[error] ${err}`);
+                next(err);
+            } else {
+                console.log(result);
+                next();
+            }
+        }
+    );
+    next();
+});
 module.exports = mongoose.model('student', studentSchema, 'students');

@@ -62,7 +62,7 @@ models.forEach(modelName => {
         
         if(['student', 'personnel'].includes(modelName)){
             const salt = await bcrypt.genSalt(10);
-            let hashedPassword = await bcrypt.hash(data.phone_number, salt);
+            let hashedPassword = await bcrypt.hash(data.phone_number.toString(), salt);
             const User=mongoose.model("user");
             const userToSave= User({
                 username : data.phone_number,
@@ -200,7 +200,7 @@ models.forEach(modelName => {
         // cascade
 
         try {
-            const model = await Model.findByIdAndDelete(req.params.id);
+            const model = await Model.deleteOne({_id:req.params.id});
             if (!model) {
                 return res.status(404).send();
             }

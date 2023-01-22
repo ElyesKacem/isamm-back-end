@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const internship = new Schema({
+const internshipSchema = new Schema({
     student_id:{
         type: Schema.Types.ObjectId,
         ref: 'student'
@@ -35,4 +35,21 @@ const internship = new Schema({
     commentary:String
 });
 
-module.exports = mongoose.model('internship', internship, 'internships');
+internshipSchema.pre('deleteMany',function (next) {
+    const studentId = this.getQuery()["student_id"];
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit",studentId);
+    mongoose.model('internship').deleteMany(
+        {student_id:studentId},function (err, result) {
+            if (err) {
+                console.log(`[error] ${err}`);
+                next(err);
+            } else {
+                console.log(result);
+                next();
+            }
+        }
+    );
+    next();
+});
+
+module.exports = mongoose.model('internship', internshipSchema, 'internships');
