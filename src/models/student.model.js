@@ -69,7 +69,7 @@ const studentSchema = new Schema({
     email: {
         type: String,
         required: true,
-        /*validate: {
+        validate: {
             validator: async function (email) {
                 const student = await this.constructor.findOne({ email: email });
                 if (student) {
@@ -78,13 +78,13 @@ const studentSchema = new Schema({
                 return true;
             },
             message: () => `Email ${email} is used!`
-        },*/
+        },
     },
     credentials_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
         required: true,
-        /*validate: {
+        validate: {
             validator: async function (user) {
                 const student = await this.constructor.findOne({ user: user });
                 if (student) {
@@ -93,7 +93,7 @@ const studentSchema = new Schema({
                 return true;
             },
             message: () => 'User is already a student.'
-        },*/
+        },
     },
 });
 

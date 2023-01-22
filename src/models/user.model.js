@@ -6,7 +6,7 @@ const userSchema = new Schema({
     username:{
         type : String,
         required : true,
-        /*validate: {
+        validate: {
             validator: async function(username) {
               const user = await this.constructor.findOne({ username:username });
               if(user) {
@@ -15,7 +15,7 @@ const userSchema = new Schema({
               return true;
             },
             message: () => 'The specified username is already in use.'
-          },*/
+          },
     },
     password: {
         type : String,
