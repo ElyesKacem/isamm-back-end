@@ -18,12 +18,19 @@ const {company} = require('../models/company.model');
 const {country} = require('../models/country.model');
 const {promotion} = require('../models/promotion.model');
 const {statisticPfe} = require('../models/statisticPfe.model');
+const { VerifyUserToken, isAlumni, VerifyRole } = require('../middleware/auth');
 
 // List of models
 let models = ['demande','event','internship','offer','personnel','pfa','resume','student'];
 
 const middlewareFunctions = {
-    // Internship: [createPFeValidator],
+
+    demande: [VerifyUserToken,isAlumni],
+    event: [VerifyUserToken,VerifyRole(["teacher"])],
+    internship: [VerifyUserToken,VerifyRole(["teacher"])],
+    offer: [VerifyUserToken,isAlumni],
+    personnel: [VerifyUserToken,VerifyRole(["administrator"])],
+    pfa: [VerifyUserToken,VerifyRole(["teacher"])]
 
 }
 
