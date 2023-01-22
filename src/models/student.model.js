@@ -19,12 +19,16 @@ const studentSchema = new Schema({
         type : String,
         required : true
     },
-    class: {
-        type : String
-    },
     birthday: {
         type : String,
+        // required : true
+    },
+    phone_number: {
+        type : String,
         required : true
+    },
+    class: {
+        type : String
     },
     alumni:{
         type: Boolean,
@@ -43,7 +47,8 @@ const studentSchema = new Schema({
     credentials_id:{
         type: Schema.Types.ObjectId,
         ref: 'user'
-    }
+    },
+    
 });
 
 module.exports = mongoose.model('student', studentSchema, 'students');
