@@ -35,7 +35,6 @@ const resumeSchema = new Schema({
 
 resumeSchema.post('save',function(req,next) {
     //const studentId = this.getQuery();
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit post save resume",req);
     mongoose.model('student').updateOne(
         {_id:req.student_id},
         { resume: req._id }

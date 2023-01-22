@@ -25,7 +25,6 @@ exports.insertEvent = async (req, res) => {
 
 exports.updateEvent = async (req, res) => {
     var id = req.params.id
-    console.log(id,req.body)
     Event.findByIdAndUpdate(id,req.body, function(err, result){
         if(err){
             res.send(err)

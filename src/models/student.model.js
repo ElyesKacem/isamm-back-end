@@ -98,9 +98,7 @@ const studentSchema = new Schema({
 });
 
 studentSchema.post('findOneAndDelete',function (res,next) {
-    console.log("oyoyoyoyoy",res);
     const studentId = this.getQuery();
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit in student",studentId);
     mongoose.model('internship').deleteMany(
         {student_id:studentId},function (err, result) {
             if (err) {
