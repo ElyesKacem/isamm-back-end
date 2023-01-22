@@ -31,7 +31,8 @@ const userSchema = new Schema({
     },
     resetLink: {type: String, default: ''},
     email:{
-        type:String,required : true
+        type:String,
+        required : true
     }
 });
 

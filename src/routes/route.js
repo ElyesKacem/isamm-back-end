@@ -94,43 +94,17 @@ models.forEach(modelName => {
             }
 
             // preparing for the statistics...
-            if(modelName=="student")
-            {
-                if(data.alumni)
-                {
+            // if(modelName=="student")
+            // {
+            //     if(data.alumni)
+            //     {
                     
-                }
-            }
+            //     }
+            // }
 
         }
 
         else{
-            // getting info from req
-        //     const info=req.body.info;
-            
-        //     // saving demande
-        //     if(modelName=='internship'){
-
-
-        //         // try {
-        //         //     const newModel = new Model({...data,})
-        //         //     await newModel.save();
-        //         //     res.status(201).send(newModel);
-        //         // } catch (error) {
-        //         //     res.status(400).send(error);
-        //         // }
-        // }
-        // // saving any other object 
-        // else{
-            
-        //     Model.save(...req.body.data,)
-
-        // }}
-
-
-
-
-
         // try to put all the informations in data ( don't forget to put object id references )
             try {
                 const newModel = new Model(data)

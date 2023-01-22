@@ -40,6 +40,9 @@ const studentSchema = new Schema({
     country: {
         type : String
     },
+    city: {
+        type : String
+    },
     job_year:{
         type : Number,
     },
@@ -97,7 +100,6 @@ const studentSchema = new Schema({
 
 studentSchema.pre('deleteOne',function (next) {
     const studentId = this.getQuery()["_id"];
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit",studentId);
     mongoose.model('internshipSchema').deleteMany(
         {student_id:studentId},function (err, result) {
             if (err) {

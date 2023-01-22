@@ -60,6 +60,7 @@ mongoose.connect(
 // const studentRoute = require("./routes/student");
 // const pfaRoute = require("./routes/pfa");
 const userRoute = require("./routes/user");
+const statisticsRoute = require("./routes/statistics");
 // const pfeRoute = require("./routes/pfe");
 // const offerRoute = require("./routes/offer");
 // const demandeRoute = require("./routes/demande");
@@ -75,6 +76,7 @@ const userRoute = require("./routes/user");
 // app.use('/event', eventRoute);
 // app.use('/test', testRoute);
 // app.use('/internship', internshipRoute);
+app.use('/statistics', statisticsRoute);
 
 // app.use("/pfe", pfeRoute);
 
