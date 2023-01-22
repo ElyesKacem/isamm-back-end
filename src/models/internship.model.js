@@ -35,11 +35,13 @@ const internshipSchema = new Schema({
     commentary:String
 });
 
-internshipSchema.pre('deleteMany',function (next) {
-    const studentId = this.getQuery()["student_id"];
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit",studentId);
-    mongoose.model('internship').deleteMany(
-        {student_id:studentId},function (err, result) {
+internshipSchema.post('save',function(req,next) {
+    //const studentId = this.getQuery();
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit post save internship",req);
+    mongoose.model('student').updateOne(
+        {_id:req.student_id},
+        { $push: { internships: req._id } }
+        ,function (err, result) {
             if (err) {
                 console.log(`[error] ${err}`);
                 next(err);
@@ -50,6 +52,6 @@ internshipSchema.pre('deleteMany',function (next) {
         }
     );
     next();
-});
+  });
 
 module.exports = mongoose.model('internship', internshipSchema, 'internships');

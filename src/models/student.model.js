@@ -66,7 +66,7 @@ const studentSchema = new Schema({
     email: {
         type: String,
         required: true,
-        validate: {
+        /*validate: {
             validator: async function (email) {
                 const student = await this.constructor.findOne({ email: email });
                 if (student) {
@@ -75,13 +75,13 @@ const studentSchema = new Schema({
                 return true;
             },
             message: () => `Email ${email} is used!`
-        },
+        },*/
     },
     credentials_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
         required: true,
-        validate: {
+        /*validate: {
             validator: async function (user) {
                 const student = await this.constructor.findOne({ user: user });
                 if (student) {
@@ -90,16 +90,38 @@ const studentSchema = new Schema({
                 return true;
             },
             message: () => 'User is already a student.'
-        },
+        },*/
     },
-    
 });
 
-studentSchema.pre('deleteOne',function (next) {
-    const studentId = this.getQuery()["_id"];
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit",studentId);
-    mongoose.model('internshipSchema').deleteMany(
+studentSchema.post('findOneAndDelete',function (res,next) {
+    console.log("oyoyoyoyoy",res);
+    const studentId = this.getQuery();
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit in student",studentId);
+    mongoose.model('internship').deleteMany(
         {student_id:studentId},function (err, result) {
+            if (err) {
+                console.log(`[error] ${err}`);
+                next(err);
+            } else {
+                console.log(result);
+                next();
+            }
+        }
+    );
+    mongoose.model('resume').deleteOne(
+        {student_id:studentId},function (err, result) {
+            if (err) {
+                console.log(`[error] ${err}`);
+                next(err);
+            } else {
+                console.log(result);
+                next();
+            }
+        }
+    );
+    mongoose.model('user').deleteOne(
+        {_id:res.credentials_id},function (err, result) {
             if (err) {
                 console.log(`[error] ${err}`);
                 next(err);
