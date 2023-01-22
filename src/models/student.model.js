@@ -40,6 +40,9 @@ const studentSchema = new Schema({
     country: {
         type : String
     },
+    city: {
+        type : String
+    },
     job_year:{
         type : Number,
     },

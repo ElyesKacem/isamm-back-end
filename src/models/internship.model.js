@@ -11,6 +11,7 @@ const internshipSchema = new Schema({
     description: String,
     internship_organization:String,
     organization_supervisor:String,
+    location: String,
     university_supervisor_id:{
         type: Schema.Types.ObjectId,
         ref: 'personnel'

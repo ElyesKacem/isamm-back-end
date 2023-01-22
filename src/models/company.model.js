@@ -10,7 +10,7 @@ const companySchema = new Schema({
       },
       company_count: {
         type: Number,
-        default:0
+        default:1
       }
     
 });
