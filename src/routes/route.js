@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const bcrypt = require("bcryptjs");
 // const createPFeValidator = require('../validators/validator');
 
 // don't forget to import middlewares's functions
@@ -13,7 +14,10 @@ const {pfa} = require('../models/pfa.model');
 const {resume} = require('../models/resume.model');
 const {student} = require('../models/student.model');
 const {personnel} = require('../models/personnel.model');
-const {user} = require('../models/user.model');
+const {company} = require('../models/company.model');
+const {country} = require('../models/country.model');
+const {promotion} = require('../models/promotion.model');
+const {statisticPfe} = require('../models/statisticPfe.model');
 
 // List of models
 let simpleModels = ['demande','pfa','resume'];
@@ -57,11 +61,12 @@ models.forEach(modelName => {
         // special treatment for student and personnal 
         
         if(['student', 'personnel'].includes(modelName)){
-            console.log(data);
+            const salt = await bcrypt.genSalt(10);
+            let hashedPassword = await bcrypt.hash(data.phone_number, salt);
             const User=mongoose.model("user");
             const userToSave= User({
                 username : data.phone_number,
-                password:data.phone_number,
+                password:hashedPassword,
                 roles:data.roles
             });
 
@@ -81,13 +86,22 @@ models.forEach(modelName => {
                 credentials_id : userToSave._id
             });          
             
-
             try {
                 await newModel.save();
                 res.status(201).send(newModel);
             } catch (error) {
                 res.status(400).send(error);
             }
+
+            // preparing for the statistics...
+            if(modelName=="student")
+            {
+                if(data.alumni)
+                {
+                    
+                }
+            }
+
         }
 
         else{
