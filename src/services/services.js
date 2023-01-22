@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const config = require('../config/config');
 const nodemailer = require("nodemailer");
+const Student = require("../models/student.model");
 
 
 exports.add = async (modelName, data) => {
@@ -64,4 +65,16 @@ exports.sendMail = async (reciever,subj,body) => {
     
     let info = await smtpTransport.sendMail(mailOptions)
     return info
+}
+
+exports.sendEmails = async () => {
+    try {
+        const students = await Student.find();
+        const emails = students.map(student => student.email);
+        console.log("sending to : " ,emails);
+        await emails.map( email => this.sendMail(email,"MAJ infos travail","Pour changer vos infos de travail veuillez visitez le lien suivant : https://isa2m.uma.tn"))
+    } catch (error) {
+        console.log({ message: error.message });
+    }
+
 }
