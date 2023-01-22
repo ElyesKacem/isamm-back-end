@@ -8,11 +8,24 @@ const mongoose = require("mongoose");
 
 app.use(express.json()); //or use body-parser middleware to parse the JSON
 const swaggerDefinition = {
+  openapi: '3.0.0',
   info: {
     title: "Analytics Project",
     version: "1.0.0",
     description: "Analytics API swagger documentation",
   },
+  components: {
+    securitySchemes: {
+        bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+        }
+    }
+  },
+  security: [{
+      bearerAuth: []
+  }]
 };
 const options = {
   swaggerDefinition,

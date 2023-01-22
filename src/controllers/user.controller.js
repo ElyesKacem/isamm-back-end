@@ -3,18 +3,24 @@ const config = require("../config/config");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model.js");
-
+const services = require("../services/services")
 
 exports.create = async (req, res) => {
 
     //Hash password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt);
-    let user = new User({
+    const username = req.body.username
+    const email = req.body.email
+    let user = await User.findOne({ username });
+    if (user) return res.status(400).send("User already registered.");
+
+    user = new User({
         username: req.body.username,
         password: hashPassword,
-        roles: req.body.roles,
-        rights:[]
+        roles: [],
+        rights: [],
+        email: email
     })
 
     user.save((err, registeredUser) => {
@@ -22,16 +28,12 @@ exports.create = async (req, res) => {
             console.log(err)
             res.status(400).send(err.message)
         } else {
-            let payload = { id: registeredUser._id, role: "admin", rights : []};
+            let payload = { id: registeredUser._id, roles: registeredUser.roles, rights: registeredUser.rights };
             const token = jwt.sign(payload, config.TOKEN_SECRET);
 
             res.status(200).send({ token })
         }
     });
-    req.body.roles.forEach(role => {
-        
-    });
-
 }
 
 exports.login = async (req, res) => {
@@ -45,7 +47,7 @@ exports.login = async (req, res) => {
                 const validPass = await bcrypt.compare(req.body.password, user.password);
                 if (!validPass) return res.status(401).send("Email or Password is wrong");
 
-                let payload = { id: user._id, role: user.role, rights:user.rights };
+                let payload = { id: user._id, roles: user.role, rights: user.rights };
                 const token = jwt.sign(payload, config.TOKEN_SECRET);
 
                 res.status(200).header("auth-token", token).send({ "token": token });
@@ -65,17 +67,17 @@ exports.login = async (req, res) => {
 exports.updateUser = async (req, res) => {
     var id = req.params.id ? req.params.id : req.user.id
 
-    if(req.body.password){
+    if (req.body.password) {
         const salt = await bcrypt.genSalt(10);
         req.body.password = await bcrypt.hash(req.body.password, salt);
     }
 
-    console.log(id,req.body)
-    User.findByIdAndUpdate(id,req.body, function(err, result){
-        if(err){
+    console.log(id, req.body)
+    User.findByIdAndUpdate(id, req.body, function (err, result) {
+        if (err) {
             res.status(400).send(err.message)
         }
-        else{
+        else {
             res.status(200).send(result)
         }
     })
@@ -83,11 +85,11 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
     var id = req.params.id
-    User.findOneAndDelete({ '_id': id }, function(err, result){
-        if(err){
+    User.findOneAndDelete({ '_id': id }, function (err, result) {
+        if (err) {
             res.status(400).send(err.message)
         }
-        else{
+        else {
             res.status(200).send(result)
         }
     })
@@ -96,11 +98,68 @@ exports.deleteUser = async (req, res) => {
 exports.getUser = async (req, res) => {
     var id = req.params.id ? req.params.id : req.user.id
     User.findOne({ '_id': id }, function (err, result) {
-        if(err){
+        if (err) {
             res.status(400).send(err.message)
         }
-        else{
+        else {
             res.status(200).send(result)
         }
-      });
+    });
+}
+
+
+
+exports.forgotPassword = async (req, res) => {
+    const email = req.body.email
+    User.findOne({ email }, (err, user) => {
+        if (err || !user) {
+            return res.status(400).json({ error: 'User with this email does not exist' })
+        }
+
+        const token = jwt.sign({ _id: user._id }, config.TOKEN_SECRET, { expiresIn: '15m' })
+
+        return user.updateOne({ resetLink: token }, (err, user) => {
+            if (err) {
+                return res.status(400).json({ error: 'Reset password link error' })
+            } else {
+                try {
+                    services.sendMail(email, "Reset password", token)
+                    return res.status(200).json({ message: 'Email has been sent, please follow the instructions' })
+                }
+                catch (error) {
+                    return res.status(400).json({ error: error.message })
+                }
+            }
+
+        })
+    })
+}
+
+exports.resetPassword = (req, res) => {
+    const { token, password } = req.body
+    if (token) {
+        jwt.verify(token, config.TOKEN_SECRET, function (error, decodedData) {
+            if (error) {
+                return res.status(400).json({ error: 'Incorrect token or it is expired' })
+            }
+            User.findOne({ resetLink: token }, (err, user) => {
+                if (err || !user) {
+                    return res.status(400).json({ error: 'User with this token does not exist' })
+                }
+
+                user.password = password
+                User.findByIdAndUpdate(user._id,{password},(err, result) => {
+                    if (err) {
+                        console.log(err)
+                        return res.status(400).json({ error: 'Reset Password Error' })
+
+                    } else {
+                        return res.status(200).json({ message: 'Your password has been changed' })
+                    }
+                })
+            })
+        })
+    } else {
+        return res.status(401).json({ error: "Authentication Error" })
+    }
 }

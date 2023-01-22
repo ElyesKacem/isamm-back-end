@@ -6,9 +6,6 @@ const userController = require('../controllers/user.controller');
 //user
 router.post('/login', userController.login);
 
-router.patch('/', VerifyUserToken, userController.updateUser)
-router.get('/', VerifyUserToken, userController.getUser)
-
 //super admin (directeur etudes)
 
 /**
@@ -37,7 +34,7 @@ router.post('/', /*VerifyUserToken, VerifyRole("directeur"),*/ userController.cr
  *             faId:
  *               type: string
  */
-router.patch('/:id', VerifyUserToken, VerifyRole("directeur"),userController.updateUser)
+router.put('/:id', VerifyUserToken, VerifyRole(["directeur"]),userController.updateUser)
 /**
  * @swagger
  * /user/:id:
@@ -46,7 +43,7 @@ router.patch('/:id', VerifyUserToken, VerifyRole("directeur"),userController.upd
  *     tags:
  *       - User
  */
-router.delete('/:id', VerifyUserToken, VerifyRole("directeur"),userController.deleteUser)
+router.delete('/:id', VerifyUserToken, VerifyRole(["directeur"]),userController.deleteUser)
 /**
  * @swagger
  * /user/:id:
@@ -66,9 +63,9 @@ router.delete('/:id', VerifyUserToken, VerifyRole("directeur"),userController.de
  *             faId:
  *               type: string
  */
-router.get('/:id', VerifyUserToken, VerifyRole("directeur") ,userController.getUser)
+router.get('/:id', VerifyUserToken, VerifyRole(["directeur"]) ,userController.getUser)
 
+router.put('/auth/forget',userController.forgotPassword)
 
-
-
+router.put('/auth/reset',userController.resetPassword)
 module.exports = router;
