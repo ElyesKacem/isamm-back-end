@@ -27,7 +27,26 @@ const studentSchema = new Schema({
         type : String,
         required : true
     },
+    first_year:{
+        type : Number,
+        required : true
+    },
+    last_year:{
+        type : Number,
+    },
     class: {
+        type : String
+    },
+    country: {
+        type : String
+    },
+    job_year:{
+        type : Number,
+    },
+    company: {
+        type : String
+    },
+    promotion: {
         type : String
     },
     alumni:{

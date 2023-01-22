@@ -46,7 +46,7 @@ mongoose.connect(
 
 // const studentRoute = require("./routes/student");
 // const pfaRoute = require("./routes/pfa");
-// const userRoute = require("./routes/user");
+const userRoute = require("./routes/user");
 // const pfeRoute = require("./routes/pfe");
 // const offerRoute = require("./routes/offer");
 // const demandeRoute = require("./routes/demande");
@@ -54,7 +54,6 @@ mongoose.connect(
 // Route Middlewares
 // app.use("/test", testRoute);
 
-// app.use("/user", userRoute);
 // app.use("/student", studentRoute);
 // app.use("/teacher", teacherRoute);
 // app.use("/pfa", pfaRoute);
@@ -69,6 +68,7 @@ mongoose.connect(
 
 const generalRoute=require("./routes/route");
 app.use('/',generalRoute);
+app.use("/user", userRoute);
 
 app.use(
   cors({
