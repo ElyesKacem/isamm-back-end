@@ -20,7 +20,6 @@ const {promotion} = require('../models/promotion.model');
 const {statisticPfe} = require('../models/statisticPfe.model');
 
 // List of models
-let simpleModels = ['demande','pfa','resume'];
 let models = ['demande','event','internship','offer','personnel','pfa','resume','student'];
 
 const middlewareFunctions = {
@@ -64,7 +63,6 @@ models.forEach(modelName => {
             const salt = await bcrypt.genSalt(10);
             let hashedPassword = await bcrypt.hash(data.phone_number.toString(), salt);
             const User=mongoose.model("user");
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",User);
             const userToSave= User({
                 username : data.phone_number,
                 password:hashedPassword,
