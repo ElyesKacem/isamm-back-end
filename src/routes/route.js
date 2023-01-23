@@ -25,12 +25,12 @@ let models = ['demande','event','internship','offer','personnel','pfa','resume',
 
 const middlewareFunctions = {
 
-    demande: [VerifyUserToken,isAlumni],
+    /*demande: [VerifyUserToken,isAlumni],
     event: [VerifyUserToken,VerifyRole(["teacher"])],
     internship: [VerifyUserToken,VerifyRole(["teacher"])],
     offer: [VerifyUserToken,isAlumni],
     personnel: [VerifyUserToken,VerifyRole(["administrator"])],
-    pfa: [VerifyUserToken,VerifyRole(["teacher"])]
+    pfa: [VerifyUserToken,VerifyRole(["teacher"])]*/
 
 }
 
