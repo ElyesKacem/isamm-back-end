@@ -38,7 +38,6 @@ const internshipSchema = new Schema({
 
 internshipSchema.post('save',function(req,next) {
     //const studentId = this.getQuery();
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaashit post save internship",req);
     mongoose.model('student').updateOne(
         {_id:req.student_id},
         { $push: { internships: req._id } }
