@@ -37,21 +37,7 @@ const middlewareFunctions = {
 
 // Loop over models and define CRUD routes
 models.forEach(modelName => {
-/**
- * @swagger
- * /modelName:
- *   get:
- *     description:  "${modelName}"
- *     tags:
- *       - "${modelName}"
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Test routes
- *         schema:
- *           type: string
- */
+
 
     // Get the model
     const Model = mongoose.model(modelName);

@@ -3,21 +3,7 @@ const { VerifyUserToken, VerifyRole } = require("../middleware/auth");
 const statisticsController = require('../controllers/statistics.controller');
 // replace isAdmin by isTeacher
 
-/**
- * @swagger
- * /statistics:
- *   post:
- *     description:  statistics
- *     tags:
- *       - statistics
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Test routes
- *         schema:
- *           type: string
- */
+
 
 // router.post('/', VerifyUserToken, VerifyRole(["student"]), statisticsController.insertStatistics);
 // router.patch('/:id', VerifyUserToken, VerifyRole(["student"]), statisticsController.updateStatistics);
