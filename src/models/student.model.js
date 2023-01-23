@@ -19,9 +19,9 @@ const studentSchema = new Schema({
         type : String,
         required : true
     },
-    birthday: {
-        type : String,
-        // required : true
+    birthdate: {
+        type : Date,
+        required : true
     },
     phone_number: {
         type : String,
@@ -61,7 +61,7 @@ const studentSchema = new Schema({
         ref: 'resume'
     },
     internships:[
-        { 
+        {
             type: Schema.Types.ObjectId,
             ref: 'internship'
         }
@@ -77,7 +77,7 @@ const studentSchema = new Schema({
                 }
                 return true;
             },
-            message: () => `Email ${email} is used!`
+            message: () => `Email is used !`
         },
     },
     credentials_id: {

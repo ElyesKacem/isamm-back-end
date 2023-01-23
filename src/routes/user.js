@@ -68,4 +68,7 @@ router.get('/:id', VerifyUserToken, VerifyRole(["directeur"]) ,userController.ge
 router.put('/auth/forget',userController.forgotPassword)
 
 router.put('/auth/reset',userController.resetPassword)
+
+router.put('/auth/change-password', userController.changePassword);
+
 module.exports = router;
