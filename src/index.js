@@ -5,6 +5,7 @@ const app = express();
 const cors = require("cors");
 const config = require("./config/config");
 const mongoose = require("mongoose");
+const {swaggersch, student} = require('./models/swaggerSchema')
 const schedule = require('node-schedule');
 const services = require('./services/services')
 app.use(express.json()); //or use body-parser middleware to parse the JSON
@@ -16,6 +17,7 @@ const swaggerDefinition = {
     description: "Analytics API swagger documentation",
   },
   components: {
+    schemas: student,
     securitySchemes: {
         bearerAuth: {
             type: 'http',

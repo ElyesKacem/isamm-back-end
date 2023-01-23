@@ -8,7 +8,9 @@ const Demande = require("../models/demande.model");
 const Pfa = require("../models/pfa.model");
 const User = require("../models/user.model");
 
-export default {
+const m2s = require('mongoose-to-swagger');
+
+module.exports = {
     user: m2s(User),
     pfa: m2s(Pfa),
     personnel: m2s(Personnel),
@@ -17,5 +19,5 @@ export default {
     resume: m2s(Resume),
     offer: m2s(Offer),
     demande: m2s(Demande),
-    company: m2s(Company)
-};
+    company: m2s(Company),
+  };
