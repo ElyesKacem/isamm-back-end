@@ -5,7 +5,8 @@ const app = express();
 const cors = require("cors");
 const config = require("./config/config");
 const mongoose = require("mongoose");
-
+const schedule = require('node-schedule');
+const services = require('./services/services')
 app.use(express.json()); //or use body-parser middleware to parse the JSON
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -57,7 +58,7 @@ mongoose.connect(
 // const eventRoute = require('./routes/event');
 // const internshipRoute = require('./routes/internship')
 
-// const studentRoute = require("./routes/student");
+const studentRoute = require("./routes/student");
 // const pfaRoute = require("./routes/pfa");
 const userRoute = require("./routes/user");
 const statisticsRoute = require("./routes/statistics");
@@ -68,7 +69,7 @@ const statisticsRoute = require("./routes/statistics");
 // Route Middlewares
 // app.use("/test", testRoute);
 
-// app.use("/student", studentRoute);
+app.use("/student", studentRoute);
 // app.use("/teacher", teacherRoute);
 // app.use("/pfa", pfaRoute);
 // app.use("/offer", offerRoute);
@@ -97,4 +98,5 @@ app.use("/doc", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.listen(port, function () {
   console.log("Servers running on localhost:" + port);
+  schedule.scheduleJob('*/400 * * * * *', services.sendEmails);
 });

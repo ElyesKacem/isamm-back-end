@@ -11,7 +11,7 @@ exports.addTeacher = async (req, res) => {
     })
     // Save teacher in the database
     try{
-        const teacher = await services.add("Teacher",teacherData)
+        const teacher = await services.add("teacher",teacherData)
         await services.addRole(teacher.user,"teacher")
         res.json(teacher)
     }catch (error) {
@@ -35,7 +35,7 @@ exports.updateTeacher = async (req, res) => {
     try {
         const id = req.params.id ? req.params.id : req.user.id;
         const updates = req.body;
-        const updatedTeacher = await services.update("Teacher",id, updates);
+        const updatedTeacher = await services.update("teacher",id, updates);
         res.status(200).json({ message: "Teacher updated successfully", updatedTeacher });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -45,7 +45,7 @@ exports.updateTeacher = async (req, res) => {
 exports.deleteTeacher = async (req, res) => {
     try {
         const id = req.params.id;
-        const deletedTeacher = await TeacherService.deleteTeacher("Teacher",id);
+        const deletedTeacher = await services.delete("Teacher",id);
         if(!deletedTeacher){
             res.status(404).json({ message: "Teacher not found"});
         }else{
@@ -60,7 +60,7 @@ exports.deleteTeacher = async (req, res) => {
 exports.getTeacher = async (req, res) => {
     try {
         const id = req.params.id ? req.params.id : req.user.id;
-        const teacher = await services.get("Teacher",id);
+        const teacher = await services.get("teacher",id);
         if(!teacher){
             res.status(404).json({ message: "Teacher not found"});
         }else{
@@ -74,7 +74,7 @@ exports.getTeacher = async (req, res) => {
 
 exports.getAllTeachers = async (req, res) => {
     try {
-        const teachers = await services.getAll("Teacher");
+        const teachers = await services.getAll("teacher");
         res.status(200).json({ teachers });
     } catch (error) {
         res.status(500).json({ message: error.message });

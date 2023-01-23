@@ -30,10 +30,20 @@ const userSchema = new Schema({
         default : []
     },
     resetLink: {type: String, default: ''},
-    email:{
-        type:String,
-        required : true
-    }
+    email: {
+        type: String,
+        required: true,
+        validate: {
+            validator: async function (email) {
+                const student = await this.constructor.findOne({ email: email });
+                if (student) {
+                    return false;
+                }
+                return true;
+            },
+            message: () => `Email is used !`
+        },
+    },
 });
 
 module.exports = mongoose.model('user', userSchema, 'users');
