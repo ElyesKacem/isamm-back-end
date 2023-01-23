@@ -69,6 +69,41 @@ router.put('/auth/forget',userController.forgotPassword)
 
 router.put('/auth/reset',userController.resetPassword)
 
+
+
+/**
+ * @swagger
+ * 
+ * /auth/change-password:
+ *   put:
+ *     summary: Change user password
+ *     description: Update the current user's password
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       description: The new password for the user.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               currentPassword:
+ *                 type: string
+ *                 description: The current password of the user.
+ *               newPassword:
+ *                 type: string
+ *                 description: The new password for the user.
+ *     responses:
+ *       200:
+ *         description: Successfully changed password
+ *       404:
+ *         description: Bad Request
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ */
 router.put('/auth/change-password', userController.changePassword);
 
 module.exports = router;
