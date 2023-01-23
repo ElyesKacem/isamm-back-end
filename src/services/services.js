@@ -63,7 +63,7 @@ exports.sendMail = async (reciever,subj,body) => {
     text: body
     };
     
-    let info = await smtpTransport.sendMail(mailOptions)
+    let info = await smtpTransport.sendMail(mailOptions).catch(err => console.log(err.map))
     return info
 }
 
